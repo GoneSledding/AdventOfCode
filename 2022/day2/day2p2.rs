@@ -1,6 +1,6 @@
 
 //Written by Adam Klindworth
-//Solves day 2 part 1 of the Advent of Code 2022
+//Solves day 2 part 2 of the Advent of Code 2022
 
 use std::env;
 use std::fs::File;
@@ -25,35 +25,32 @@ fn main()
     let mut score:u64 = 0;
     for line in lines {
         // A     B       C
-        // X     Y       Z
         //Rock  Paper  Scissors
         // 1     2       3
+        // X = lose (0), Y = draw (3), Z = win (6)
         let line_vec:Vec<char> = line.chars().collect();
 
-        if line_vec[2] == 'X' {
-            score += 1;
-            match line_vec[0] {
-                'A' => score += 3,
-                'B' => score += 0,
-                'C' => score += 6,
+        if line_vec[0] == 'A' {
+            match line_vec[2] {
+                'X' => score += 3,
+                'Y' => score += 4,
+                'Z' => score += 8,
                 _ => println!("Invalid"),
             };
         }
-        else if line_vec[2] == 'Y' {
-            score += 2;
-            match line_vec[0] {
-                'A' => score += 6,
-                'B' => score += 3,
-                'C' => score += 0,
+        else if line_vec[0] == 'B' {
+            match line_vec[2] {
+                'X' => score += 1,
+                'Y' => score += 5,
+                'Z' => score += 9,
                 _ => println!("Invalid"),
             };
         }
-        else if line_vec[2] == 'Z' {
-            score += 3;
-            match line_vec[0] {
-                'A' => score += 0,
-                'B' => score += 6,
-                'C' => score += 3,
+        else if line_vec[0] == 'C' {
+            match line_vec[2] {
+                'X' => score += 2,
+                'Y' => score += 6,
+                'Z' => score += 7,
                 _ => println!("Invalid"),
             };
         }
