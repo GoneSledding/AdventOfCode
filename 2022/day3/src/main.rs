@@ -16,10 +16,25 @@ pub fn find_common2(s1: &str, s2: &str) -> char
     return 'a';
 }
 
+pub fn find_common3(s1: &str, s2: &str, s3: &str) -> char
+{
+    for c1 in s1.chars()
+    {
+        for c2 in s2.chars()
+        {
+            if s3.contains(c1) && s3.contains(c2) && c1 == c2
+            {
+                return c1;
+            }
+        }
+    }
+    return '0';
+}
+
 pub fn char_to_item_priority(c:char) -> u32
 {
     let alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    return (alpha.find(c).expect("Invalid value; impossible") + 1).try_into().unwrap();
+    return (alpha.find(c).expect("Invalid value") + 1).try_into().unwrap();
 }
 
 pub fn part_one()
@@ -43,15 +58,49 @@ pub fn part_one()
         total_priority += priority;
     }
     println!("Priority: {}", total_priority);
-
-    f.close();
 }
 
 pub fn part_two()
 {
     let f = File::open("data/input.txt").expect("file not found");
+    let reader = BufReader::new(f);
 
-    f.close();
+    let mut total_badge_priorities = 0;
+    let mut line_num = 0;
+    let mut line_1 = String::new();
+    let mut line_2 = String::new();
+    let mut line_3 = String::new();
+
+    for line in reader.lines()
+    {
+        if line_num % 3 == 0
+        {
+            line_1 = line.unwrap();
+        }
+        else if line_num % 3 == 1
+        {
+            line_2 = line.unwrap();
+        }
+        else if line_num % 3 == 2
+        {
+            line_3 = line.unwrap();
+        }
+
+        if line_num % 3 == 2
+        {
+            let badge = find_common3(line_1.as_str(), line_2.as_str(), line_3.as_str());
+
+            total_badge_priorities += char_to_item_priority(badge);
+
+            line_1.clear();
+            line_2.clear();
+            line_3.clear();
+        }
+
+        line_num += 1;
+    }
+
+    println!("Badge Priorities: {}", total_badge_priorities);
 }
 
 fn main() 
@@ -76,5 +125,12 @@ mod tests {
     {
         assert_eq!(find_common2("abcdefgh", "ijklmnoep"), 'e');
         assert_eq!(find_common2("vJrwpWtwJgWr", "hcsFMMfFFhFp"), 'p');
+    }
+
+    #[test]
+    fn test_common3_strings()
+    {
+        assert_eq!(find_common3("vJrwpWtwJgWrhcsFMMfFFhFp", "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL", "PmmdzqPrVvPwwTWBwg"), 'r');
+        assert_eq!(find_common3("wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn", "ttgJtRGJQctTZtZT", "CrZsJsPPZsGzwwsLwLmpwMDw"), 'Z');
     }
 }
