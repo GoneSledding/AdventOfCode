@@ -1,3 +1,4 @@
 # AdventOfCode
 
-Using this puzzles as a mechanism to learn Rust.
+Using these puzzles as a mechanism to learn Rust.
+
