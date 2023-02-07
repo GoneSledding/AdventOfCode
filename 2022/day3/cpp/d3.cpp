@@ -50,20 +50,20 @@ class Rucksack
 
 int main(int argc, char ** argv)
 {
-	if(argc < 2) {
-		cout << "Not enough args" << endl;
-		exit(1);
-	}
+    if(argc < 2) {
+        cout << "Not enough args" << endl;
+        exit(1);
+    }
 
-	ifstream myfile;
-	string cur_line;
+    ifstream myfile;
+    string cur_line;
 	
-	myfile.open(argv[1]);
+    myfile.open(argv[1]);
 
-	int part1_score = 0;
+    int part1_score = 0;
     int part2_score = 0;
-	while(!myfile.eof()) {
-		getline(myfile, cur_line);
+    while(!myfile.eof()) {
+        getline(myfile, cur_line);
         Rucksack current_ruck1 = Rucksack(cur_line);
         part1_score += current_ruck1.calc_duplicates();
 
