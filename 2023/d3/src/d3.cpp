@@ -145,7 +145,7 @@ class Schematic
 
     /**
     \brief Determines whether the '*' is part of a gear and calculates the gear ratio
-    \param 
+    \param sym Symbol we want to check for it being a gear and calculate the gear ratio.
     \return Returns the gear ratio if it is. Zero if it isn't a gear.
     **/
     int calculate_gear_ratio(Symbol sym)
